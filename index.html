@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MoeGuard 喵图混淆 · 网页版</title>
+<link rel="icon" href="icons/icon48.png">
+<link rel="stylesheet" href="web/style.css">
+</head>
+<body>
+<header>
+  <h1>🌸 MoeGuard 喵图混淆 · 网页版</h1>
+  <div class="sub">自研无损「流光照影」混淆（MOE v3）· 无需密钥 · 图片只在你的浏览器里处理，不上传任何服务器</div>
+</header>
+
+<main>
+  <section id="drop" class="drop" tabindex="0">
+    <div class="drop-ico">🖼️</div>
+    <div class="drop-title">把图片拖到这里</div>
+    <div class="drop-sub">也可以 <button id="pick" class="link" type="button">选择文件</button>，或直接 Ctrl+V 粘贴 · 支持 PNG / JPEG / WebP / BMP，可一次多张</div>
+    <input id="file" type="file" accept="image/*" multiple hidden>
+  </section>
+
+  <section class="card opts">
+    <div class="opt">
+      <label for="salt">群组盐值</label>
+      <input id="salt" type="text" placeholder="留空 = 所有人可解" autocomplete="off">
+      <div class="hint">填了之后，只有用同一盐值的人能解开</div>
+    </div>
+    <div class="opt">
+      <label for="tile">碎片尺寸</label>
+      <select id="tile">
+        <option value="">自动（推荐）</option>
+        <option value="64">64</option>
+        <option value="128">128</option>
+        <option value="256">256</option>
+        <option value="512">512</option>
+        <option value="1024">1024</option>
+      </select>
+      <div class="hint">块越大越柔，越大补边越浪费体积</div>
+    </div>
+    <div class="opt">
+      <label for="mode">模式</label>
+      <select id="mode">
+        <option value="auto">自动识别</option>
+        <option value="enc">强制混淆</option>
+        <option value="dec">强制解混淆</option>
+      </select>
+      <div class="hint">自动 = 按图里的 MOE 标记决定方向</div>
+    </div>
+    <div class="opt">
+      <label for="meta">保留 PNG 文本元数据</label>
+      <div class="check"><input id="meta" type="checkbox" checked><span>ComfyUI 工作流 / 提示词随图携带，解码时原样写回</span></div>
+    </div>
+    <div class="opt acts">
+      <button id="selfTest" class="ghost" type="button">引擎自检</button>
+      <button id="zip" class="ghost" type="button" disabled>全部下载 ZIP</button>
+      <button id="clear" class="ghost" type="button" disabled>清空</button>
+    </div>
+    <div id="verdict" class="verdict"></div>
+  </section>
+
+  <ul id="list" class="list"></ul>
+  <div id="empty" class="empty">还没有图片 —— 拖一张进来试试</div>
+</main>
+
+<footer>
+  <span id="engine"></span> · 输出统一为 PNG（无损）· 混淆图外观：一圈中性灰定位框 + 分形纹样
+</footer>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-box">
+    <div class="modal-head">
+      <span id="mTitle"></span>
+      <button id="mClose" class="ghost" type="button">关闭</button>
+    </div>
+    <div class="modal-body">
+      <figure><img id="mOne" alt="" title="点击切换 1:1 原始尺寸"><figcaption id="mOneCap"></figcaption></figure>
+    </div>
+    <div class="modal-foot">
+      <span id="mInfo"></span>
+      <div id="mSide" class="seg">
+        <button id="mSideBefore" class="ghost" type="button">原图</button>
+        <button id="mSideAfter" class="ghost" type="button">结果</button>
+      </div>
+      <button id="mDl" type="button">下载结果</button>
+    </div>
+  </div>
+</div>
+
+<script src="src/core.js"></script>
+<script src="web/app.js"></script>
+</body>
+</html>
